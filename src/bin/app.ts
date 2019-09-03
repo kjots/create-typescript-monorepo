@@ -1,0 +1,3 @@
+import createTypescriptMonorepo from '..';
+
+createTypescriptMonorepo();
