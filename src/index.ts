@@ -1,3 +1,5 @@
+import { promises as fs } from 'fs';
+
 import decompress from 'decompress';
 import handlebars from 'handlebars';
 import path from 'path';
@@ -5,7 +7,7 @@ import path from 'path';
 import { camelCase, upperFirst } from 'lodash';
 
 import { from, MonoTypeOperatorFunction, Observable } from 'rxjs';
-import { filter, map, mergeAll, tap } from 'rxjs/operators';
+import { concatMap, filter, map, mergeAll, tap } from 'rxjs/operators';
 
 import File = require('vinyl');
 
@@ -43,8 +45,10 @@ export default function createTypescriptMonorepo(opts: Opts) {
   readTemplateFiles()
     .pipe(
       applyTemplate({ name, nameCamelCase, nameTitleCase, description, keywords }),
-      dest(opts.output)
-    );
+      dest(opts.output),
+      concatMap(file => from(fs.chmod(file.path, file.mode)))
+    )
+    .subscribe();
 }
 
 function readTemplateFiles(): Observable<File> {
@@ -56,6 +60,7 @@ function readTemplateFiles(): Observable<File> {
         cwd: process.cwd(),
         base: templateZip,
         path: path.resolve(templateZip, file.path),
+        mode: file.mode,
         contents: file.data
       }))
     );
