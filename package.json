@@ -1,6 +1,6 @@
 {
   "name": "@kjots/create-typescript-monorepo",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Create TypeScript monorepo",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
