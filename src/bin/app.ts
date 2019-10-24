@@ -1,6 +1,6 @@
 import yargs from 'yargs';
 
-import createTypescriptMonorepo, { defaults } from '..';
+import { createTypescriptMonorepo, defaults } from '..';
 
 const argv = yargs
   .usage('Usage: $0 [options]')

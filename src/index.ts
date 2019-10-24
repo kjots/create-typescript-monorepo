@@ -36,7 +36,7 @@ interface TemplateContext {
 
 const templateZip = path.resolve(__dirname, '../lib/typescript-monorepo-template.zip');
 
-export default function createTypescriptMonorepo(opts: Opts) {
+export function createTypescriptMonorepo(opts: Opts) {
   const { name, description } = opts;
   const nameCamelCase = camelCase(name);
   const nameTitleCase = upperFirst(nameCamelCase);
